@@ -28,5 +28,7 @@ typedef struct { //!< This structure stores a token
    int val; // value of NUMBER token
 } T_token;
 
+int process_token();
+
 #endif /* TOKEN_H */
 // EOF
