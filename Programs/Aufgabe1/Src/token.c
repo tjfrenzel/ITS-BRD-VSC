@@ -1,9 +1,9 @@
-#include "token.h"
+#include "arithmetics.h"
 #include "scanner.h"
 #include "stack.h"
+#include "errorhandling.h"
 
 int process_token() {
-    int error_code;
     T_token token = next_token();
     
     switch (token.tok){

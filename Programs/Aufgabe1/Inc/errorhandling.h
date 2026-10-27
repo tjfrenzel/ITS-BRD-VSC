@@ -18,6 +18,8 @@
 #define INTEGEROVERFLOW -6
 #define DIVISIONBYZERO -7
 
+extern int error_code;
+
 void process_error_code(int error_code);
 
 #endif /* ERRORHANDLING_H */

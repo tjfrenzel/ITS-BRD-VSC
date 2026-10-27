@@ -1,8 +1,6 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "display.h"
 #include "stack.h"
-#include "errors.h"
+#include "errorhandling.h"
 
 Stack stack;
 
@@ -33,6 +31,7 @@ int prt_top(){
     char str_buffer[STR_BUFFER_SIZE];
     int_to_str(stack.array[stack.top], str_buffer);
     print_stdout(str_buffer);
+    print_stdout("\n");
     return 0;
 }
 
@@ -44,6 +43,7 @@ int prt_three(){
     for (int i = stack.top; i >= 0; i--) {
         int_to_str(stack.array[i], str_buffer);
         print_stdout(str_buffer);
+        print_stdout("\n");
     }
     return 0;
 }

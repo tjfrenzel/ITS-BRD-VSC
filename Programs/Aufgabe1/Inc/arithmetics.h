@@ -1,19 +1,21 @@
 /**
- * @file scanner.h
+ * @file arithmetics.h
  * @brief Header file of input module.
  */
 
-#ifndef 
-#define 
+#ifndef ARITHMETICS_H
+#define ARITHMETICS_H
 
-#include 
 
 /*
  ****************************************************************************************
  * @brief : 
  * @return 
  ****************************************************************************************/
+int add(void);
+int subtract(void);
+int multiply(void);
+int divide(void);
 
-
-#endif 
+#endif /* ARITHMETICS_H */
 // EOF

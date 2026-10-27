@@ -10,12 +10,12 @@
 #include "LCD_GUI.h"
 #include "LCD_Touch.h"
 #include "init.h"
-#include "lcd.h"
 #include "stm32f4xx_hal.h"
-#include <stdio.h>
 #include <stdbool.h>
 #include "display.h"
 #include "stack.h"
+#include "token.h"
+#include "errorhandling.h"
 
 int main(void) {
    initITSboard(); // Initialisierung des ITS Boards
@@ -27,10 +27,11 @@ int main(void) {
    init_stack();   // Initialisierung des Stacks
 
    // Test in Endlosschleife
-   const int POLL_DELAY = 10000;
+   const int POLL_DELAY = 10;
    while (1) {
+      process_token();
+      process_error_code(error_code);
       HAL_Delay(POLL_DELAY);
    }
 }
-
 // EOF
