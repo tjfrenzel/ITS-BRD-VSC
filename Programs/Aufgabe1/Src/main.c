@@ -9,19 +9,16 @@
 
 #include "LCD_GUI.h"
 #include "LCD_Touch.h"
-#include "init.h"
-#include "stm32f4xx_hal.h"
-#include <stdbool.h>
 #include "display.h"
-#include "stack.h"
-#include "token.h"
 #include "errorhandling.h"
+#include "init.h"
+#include "stack.h"
+#include "stm32f4xx_hal.h"
+#include "token.h"
+#include <stdbool.h>
 
 int main(void) {
    initITSboard(); // Initialisierung des ITS Boards
-
-   GUI_init(DEFAULT_BRIGHTNESS); // Initialisierung des LCD Boards mit Touch
-   TP_Init(false); // Initialisierung des LCD Boards mit Touch
 
    init_display(); // Initialisierung der Display Funktionen
    init_stack();   // Initialisierung des Stacks

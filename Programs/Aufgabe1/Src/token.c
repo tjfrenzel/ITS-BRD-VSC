@@ -1,45 +1,45 @@
 #include "arithmetics.h"
+#include "errorhandling.h"
 #include "scanner.h"
 #include "stack.h"
-#include "errorhandling.h"
 
 int process_token() {
-    T_token token = next_token();
-    
-    switch (token.tok){
+   T_token token = next_token();
 
-        case NUMBER:
-            push(token.val);
-            break;
-        case PLUS:
-            error_code = add();
-            break;
-        case MINUS:
-            error_code = subtract();
-            break;
-        case MULT:
-            error_code = multiply();
-            break;
-        case DIV:
-            error_code = divide();
-            break;
-        case PRT:
-            error_code = prt_top();
-            break;
-        case PRT_ALL:
-            error_code = prt_three();
-            break;
-        case CLEAR:
-            clear();
-            break;
-        case DOUBLE:
-            error_code = double_top();
-            break;
-        case SWAP:
-            error_code = swap();
-            break;
-        default:
-            break;
-    }
-    return error_code;
+   switch (token.tok) {
+
+   case NUMBER:
+      error_code = push(token.val);
+      break;
+   case PLUS:
+      error_code = add();
+      break;
+   case MINUS:
+      error_code = subtract();
+      break;
+   case MULT:
+      error_code = multiply();
+      break;
+   case DIV:
+      error_code = divide();
+      break;
+   case PRT:
+      error_code = prt_top();
+      break;
+   case PRT_ALL:
+      error_code = prt_three();
+      break;
+   case CLEAR:
+      clear();
+      break;
+   case DOUBLE:
+      error_code = double_top();
+      break;
+   case SWAP:
+      error_code = swap();
+      break;
+   default:
+      break;
+   }
+   return error_code;
 }

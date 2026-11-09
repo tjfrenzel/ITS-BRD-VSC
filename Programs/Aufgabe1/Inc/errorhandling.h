@@ -8,19 +8,19 @@
 
 /*
  ****************************************************************************************
- * @brief : 
- * @return 
+ * @brief :
+ * @return
  ****************************************************************************************/
-#define STACKOVERFLOW -2
-#define STACKUNDERFLOW -3
-#define EMPTYSTACK -4
-#define NOTENOUGHTELEMENTS -5
-#define INTEGEROVERFLOW -6
-#define DIVISIONBYZERO -7
+#define STACKOVERFLOW (-2)
+#define STACKUNDERFLOW (-3)
+#define EMPTYSTACK (-4)
+#define NOTENOUGHTELEMENTS (-5)
+#define INTEGEROVERFLOW (-6)
+#define DIVISIONBYZERO (-7)
 
 extern int error_code;
 
 void process_error_code(int error_code);
 
 #endif /* ERRORHANDLING_H */
-// EOF
+       // EOF

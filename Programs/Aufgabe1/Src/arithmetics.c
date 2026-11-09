@@ -1,121 +1,111 @@
-#include <stdint.h>
-#include "stack.h"
 #include "errorhandling.h"
+#include "stack.h"
+#include <stdint.h>
 
-int add(){
-    int a;
-    int b;
+int add() {
+   int var1;
+   int var2;
 
-    error_code = pop(&a);
-    if (error_code != 0) {
-        return error_code;
-    }
+   error_code = pop(&var1);
+   if (error_code != 0) {
+      return error_code;
+   }
 
-    error_code = pop(&b);
-    if (error_code != 0) {
-        push(a);
-        return error_code;
-    }
+   error_code = pop(&var2);
+   if (error_code != 0) {
+      push(var1);
+      return error_code;
+   }
 
-    if ((b > 0 && a > INTMAX_MAX - b) || (b < 0 && a < INTMAX_MIN - b)) {
-        push(b);
-        push(a);
-        return INTEGEROVERFLOW;
-    }
+   if ((var1 > 0 && var2 > 0 && var1 > INT32_MAX - var2) ||
+       (var1 < 0 && var2 < 0 && var1 < INT32_MIN - var2)) {
+      error_code = rollback(var1, var2);
+      return error_code;
+   }
 
-    push(b + a);
-    return 0;
+   push(var2 + var1);
+   return 0;
 }
 
-int subtract(){
-    int a;
-    int b;
+int subtract() {
+   int var1;
+   int var2;
 
-    error_code = pop(&a);
-    if (error_code != 0) {
-        return error_code;
-    }
+   error_code = pop(&var1);
+   if (error_code != 0) {
+      return error_code;
+   }
 
-    error_code = pop(&b);
-    if (error_code != 0) {
-        push(a);
-        return error_code;
-    }
+   error_code = pop(&var2);
+   if (error_code != 0) {
+      push(var1);
+      return error_code;
+   }
 
-    if ((b > 0 && -a < INTMAX_MIN + b) || (b < 0 && -a > INTMAX_MAX + b)) {
-        push(b);
-        push(a);
-        return INTEGEROVERFLOW;
-    }
-    
-    push(b - a);
-    return 0;
+   if ((var1 < 0 && var2 > INT32_MAX + var1) ||
+       (var1 > 0 && var2 < INT32_MIN + var1)) {
+      error_code = rollback(var1, var2);
+      return error_code;
+   }
+
+   push(var2 - var1);
+   return 0;
 }
 
-int multiply(){
-    int a;
-    int b;
+int multiply() {
+   int var1;
+   int var2;
 
-    error_code = pop(&a);
-    if (error_code != 0) {
-        return error_code;
-    }
+   error_code = pop(&var1);
+   if (error_code != 0) {
+      return error_code;
+   }
 
-    error_code = pop(&b);
-    if (error_code != 0) {
-        push(a);
-        return error_code;
-    }
+   error_code = pop(&var2);
+   if (error_code != 0) {
+      push(var1);
+      return error_code;
+   }
 
-    // positives Ergebnis
-    if ((a > 0 && b > 0)) {
-        if (a > INTMAX_MAX / b) goto overflow;
-    }
+   // positives Ergebnis
+   if (((var1 > 0 && var2 > 0) && (var1 > (INT32_MAX / var2))) ||
+       ((var1 > 0 && var2 < 0) && (var2 < (INT32_MIN / var1))) ||
+       ((var1 < 0 && var2 > 0) && (var1 < (INT32_MIN / var2))) ||
+       ((var1 < 0 && var2 < 0) && (var1 < (INT32_MAX / var2)))) {
+      error_code = rollback(var1, var2);
+      return error_code;
+   }
 
-    // negatives Ergebnis (beide negativ → positiv)
-    if ((a < 0 && b < 0)) {
-        if (a < INTMAX_MAX / b) goto overflow;
-    }
-
-    // gemischte Vorzeichen → negativ
-    if ((a > 0 && b < 0)) {
-        if (b < INTMAX_MIN / a) goto overflow;
-    }
-
-    if ((a < 0 && b > 0)) {
-        if (a < INTMAX_MIN / b) goto overflow;
-    }
-
-    push(a * b);
-    return 0;
-
-    overflow:
-    push(b);
-    push(a);
-    return INTEGEROVERFLOW;
+   push(var2 * var1);
+   return 0;
 }
 
-int divide(){
-    int a;
-    int b;
+int divide() {
+   int var1;
+   int var2;
 
-    error_code = pop(&a);
-    if (error_code != 0) {
-        return error_code;
-    }
+   error_code = pop(&var1);
+   if (error_code != 0) {
+      return error_code;
+   }
 
-    error_code = pop(&b);
-    if (error_code != 0) {
-        push(a);
-        return error_code;
-    }
+   error_code = pop(&var2);
+   if (error_code != 0) {
+      push(var1);
+      return error_code;
+   }
 
-    if (a == 0) {
-        push(b);
-        push(a);
-        return DIVISIONBYZERO;
-    }
-        
-    push(b / a);
-    return 0;
+   if (var1 == 0) {
+      push(var2);
+      push(var1);
+      return DIVISIONBYZERO;
+   }
+
+   if (var1 == INT32_MIN && var2 == -1) {
+      error_code = rollback(var1, var2);
+      return error_code;
+   }
+
+   push(var2 / var1);
+   return 0;
 }
