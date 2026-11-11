@@ -30,5 +30,8 @@ typedef struct {
 } gpio;
 extern gpio gpio_t;
 
+void read_inputs(void);
+void output_led(void);
+
 #endif /* GPIO_H */
        // EOF   

@@ -7,6 +7,7 @@
 #define FINALSTATEMACHINE_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define PHASE_A 1
 #define PHASE_B 2
@@ -33,10 +34,13 @@ extern Phase phase;
 
  typedef struct {
     int current_state;
+    int error;
     uint32_t timestamp;
 } State;
 extern State state;
 
+void get_phase(void);
+int get_state(void);
 
 #endif /* FINALSTATEMACHINE_H */
        // EOF   

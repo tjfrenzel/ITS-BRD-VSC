@@ -13,12 +13,16 @@ void read_inputs() {
 void output_led(){
     uint32_t set_mask;
 
+    if (state.error == ERROR) {
+        return;
+    }
+
     switch (state.current_state){
         case FORWARD:
-            set_mask = BSRR_MASK_PIN_23;
+            set_mask = BSRR_MASK_PIN_23 | (BSRR_MASK_PIN_22 << 16);
             break;
         case BACKWARD:
-            set_mask = BSRR_MASK_PIN_22;
+            set_mask = BSRR_MASK_PIN_22 | (BSRR_MASK_PIN_23 << 16);
             break;
         default:
             set_mask = BSRR_MASK_PIN_21;

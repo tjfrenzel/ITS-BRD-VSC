@@ -26,14 +26,19 @@ int get_state() {
     if (phase_diff == 1 || phase_diff == -3) {
         state.current_state = FORWARD; // Vorwärts
         phase.phase_counter++; // Erhöhe den Phasenzähler
+        state.timestamp = phase.timestamp;
+
     } else if (phase_diff == -1 || phase_diff == 3) {
         state.current_state = BACKWARD; // Rückwärts
         phase.phase_counter--; // Verringere den Phasenzähler
+        state.timestamp = phase.timestamp;
+
     } else if (phase_diff == 0) {
         state.current_state = NO_CHANGE; // Kein Richtungswechsel
+
     } else {
-        state.current_state = ERROR; // Fehler
+        state.error = ERROR; // Fehler
+        return state.error;
     }
-    state.timestamp = phase.timestamp;
     return state.current_state;
 }
