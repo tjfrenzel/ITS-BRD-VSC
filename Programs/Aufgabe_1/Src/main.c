@@ -13,7 +13,6 @@
 #include "my_error.h"
 #include "scanner.h"
 #include "stack.h"
-#include "stack_util.h"
 #include "stm32f4xx_hal.h"
 #include "token.h"
 #include <stdio.h>

@@ -2,14 +2,13 @@
  * @file arithmetic.h
  * @author Trung Duc Nguyen, Tim-Jonas Frenzel
  * @date 29.10.26
- * @brief Header file of module containing arithmetic operations.
+ * @brief Header file of module containing basic arithmetic operations.
  */
 
 #ifndef ARITHMETIC_H
 #define ARITHMETIC_H
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *  @brief      This function adds two Integers.
  *
  *  @param      value_1 First summand.
@@ -20,8 +19,7 @@
  ****************************************************************************************/
 int add(int value_1, int value_2, int *result);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *  @brief      This function subtracts the second Integer from the first.
  *
  *  @param      value_1 Minuend.
@@ -32,8 +30,7 @@ int add(int value_1, int value_2, int *result);
  ****************************************************************************************/
 int subtract(int, int, int *);
 
-/*
- ****************************************************************************************
+/*****************************************************************************************
  *  @brief      This function multiplies two Integers.
  *
  *  @param      value_1 First factor.
@@ -44,12 +41,11 @@ int subtract(int, int, int *);
  ****************************************************************************************/
 int multiply(int, int, int *);
 
-/*
- ****************************************************************************************
- *  @brief      This function prints a string to stdout terminal.
+/*****************************************************************************************
+ *  @brief      This function divides the first Integer by the second.
  *
- *  @param      value_1 First Integer.
- *  @param      value_2 Second Integer.
+ *  @param      value_1 Dividend.
+ *  @param      value_2 Divisor.
  *  @param      result  Integer Pointer for Result.
  *
  *  @return     POSIX API Compliant negative Error Code, else zero on success.

@@ -10,21 +10,27 @@
 
 #define STACK_SIZE 10
 
-typedef struct {
-   int arr[STACK_SIZE];
-   int ptr;
-} T_stack;
+typedef struct Peek3Result {
+   int values[3];
+   int count;
+} T_peek3result;
 
 int push(int);
 
 int pop(int *);
-
-int peek(int *);
 
 int is_empty();
 
 int is_full();
 
 void clear();
+
+int peek(int *);
+
+int peek_3(T_peek3result *);
+
+int swap();
+
+int copy();
 
 #endif
