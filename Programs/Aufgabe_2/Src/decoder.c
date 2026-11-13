@@ -1,0 +1,49 @@
+ #include "decoder.h"
+#include <stdint.h>
+
+static const int8_t DECODER_TABLE[16] = {
+    0, -1, 1, 2,
+    1, 0, 2, -1,
+    -1, 2, 0, 1,
+    2, 1, -1, 0,
+};
+ 
+void decoder_init(Decoder_t *decoder, Encoder_t *encoder)
+{
+    decoder->phase = encoder->phase;
+    decoder->counter = 0;
+    decoder->direction = ENCODER_DIR_NONE;
+    decoder->timestamp = encoder->timestamp;
+    decoder->initialized = 1;
+}
+
+int decoder_decode(Decoder_t *decoder, Encoder_t *encoder){
+    
+    int8_t result;
+    uint8_t index;
+    
+    if(!decoder->initialized){
+        
+        decoder->phase = encoder->phase;
+        decoder->timestamp = encoder->timestamp;
+        decoder->counter = 0;
+        decoder->direction = ENCODER_DIR_NONE;
+        decoder->initialized = 1;
+
+        return 0;
+    }
+
+    index = (encoder->phase << 2) | decoder->phase;
+
+    result = DECODER_TABLE[index];
+
+    if (result == ENCODER_DIR_FORWARD || result == ENCODER_DIR_BACKWARD){
+        
+        decoder->direction = (Encoder_Direction_t)result;
+        decoder->counter += decoder->direction;
+        decoder->phase = encoder->phase;
+        decoder->timestamp = encoder->timestamp;
+    }
+
+    return result;
+}

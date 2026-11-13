@@ -13,6 +13,11 @@ __pycache__/
 # Ignore User specific setting
 /Programs/*/*.uvguix.*
 
+# Ignore Environment-related files
+.vscode/
+/Programs/*/.cmsis/
+/Programs/*/.vscode.d/
+
 ### macOS ###
 # General
 .DS_Store
