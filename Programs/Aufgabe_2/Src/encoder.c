@@ -9,8 +9,8 @@ void encoder_read(Encoder_t *encoder){
     // GPIO-Eingänge auslesen
     gpio_state = GPIOF->IDR;
 
-    // Phase bilden: Bits isolieren, dann tauschen 
-    encoder->phase = ((gpio_state & 0x01U) << 1) | ((gpio_state & 0x02U) >> 1);
+    // Phase bilden: Bits isolieren
+    encoder->phase_new = (phase_enum) (gpio_state & IDR_MASK_ENCODER);
 
     // Zeitstempel erfassen
     encoder->timestamp = getTimeStamp();

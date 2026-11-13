@@ -1,6 +1,36 @@
- #include "decoder.h"
+#include "decoder.h"
 #include <stdint.h>
+#include "myerror.h"
 
+
+int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
+    
+    int phase_diff = encoder->phase_new - encoder->phase_old;
+    encoder->phase_old = encoder->phase_new;
+
+    switch (phase_diff) {
+        case 1:
+        case -3:
+            decoder->direction = DECODED_DIR_FORWARD;
+            decoder->phase_counter++;
+            decoder->timestamp = encoder->timestamp;
+            break;
+        case -1:
+        case 3:
+            decoder->direction = DECODED_DIR_BACKWARD;
+            decoder->phase_counter--;
+            decoder->timestamp = encoder->timestamp;
+            break;
+        case 0:
+            decoder->direction = DECODED_DIR_NONE;
+            break;
+        default:
+            return ERROR;
+    }
+    return 0;
+}
+
+/*
 static const int8_t DECODER_TABLE[16] = {
     0, -1, 1, 2,
     1, 0, 2, -1,
@@ -47,3 +77,4 @@ int decoder_decode(Decoder_t *decoder, Encoder_t *encoder){
 
     return result;
 }
+*/

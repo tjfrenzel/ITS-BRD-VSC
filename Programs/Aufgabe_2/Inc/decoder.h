@@ -4,26 +4,23 @@
 #include <stdint.h>
 #include "encoder.h"
 
+
 typedef enum {
-    ENCODER_DIR_BACKWARD = -1,
-    ENCODER_DIR_NONE,
-    ENCODER_DIR_FORWARD,
-} Encoder_Direction_t;
+    DECODED_DIR_BACKWARD = -1,
+    DECODED_DIR_NONE = 0,
+    DECODED_DIR_FORWARD = 1,
+} direction_enum;
 
 typedef struct {
-    uint8_t phase;
-    
-    int32_t counter;
-    
-    Encoder_Direction_t direction;
-    
+    direction_enum direction;
+    int phase_counter;
     uint32_t timestamp;
+} Decoder_t;
 
-    uint8_t initialized;
-}Decoder_t;
-
+int decoder_decode(Encoder_t *encoder, Decoder_t *decoder);
+/*
 void decoder_init(Decoder_t *decoder, Encoder_t *encoder);
 
 int decoder_decode(Decoder_t *decoder, Encoder_t *encoder);
-
+*/
 #endif
