@@ -1,10 +1,15 @@
 #include "decoder.h"
 #include <stdint.h>
+#include "encoder.h"
 #include "myerror.h"
 
 
 int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
     
+    if (decoder->error_code) {
+        return decoder->error_code;
+    }
+
     int phase_diff = encoder->phase_new - encoder->phase_old;
     encoder->phase_old = encoder->phase_new;
 
@@ -25,9 +30,15 @@ int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
             decoder->direction = DECODED_DIR_NONE;
             break;
         default:
-            return ERROR;
-    }
+            return decoder->error_code = ERROR;
+    };
     return 0;
+}
+
+void init_decoder (Decoder_t *decoder){
+    decoder->direction = DECODED_DIR_NONE;
+    decoder->phase_counter = 0;
+    decoder->error_code = 0;
 }
 
 /*

@@ -12,6 +12,9 @@ void encoder_read(Encoder_t *encoder){
     // Phase bilden: Bits isolieren
     encoder->phase_new = (phase_enum) (gpio_state & IDR_MASK_ENCODER);
 
+    // Reset-Button-Zustand erfassen
+    encoder->reset_button_pressed = (gpio_state & IDR_MASK_RESET_BUTTON) != 0;
+
     // Zeitstempel erfassen
     encoder->timestamp = getTimeStamp();
 }

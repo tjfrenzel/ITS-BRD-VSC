@@ -24,21 +24,32 @@ int main(void) {
    initITSboard(); // Initialisierung des ITS Boards
    GUI_init(DEFAULT_BRIGHTNESS); // Initialisierung der GUI
 
-   double speed;
-   double angle;
    Encoder_t encoder;
-   Decoder_t decoder = { .initialized = 0 };
-   Calculation_t calc = { .initialized = 0 };
+   Decoder_t decoder;   
 
    //Super loop
    while (1) {
+
+      encoder_read(&encoder);
+      decoder.error_code = decoder_decode(&encoder, &decoder);
+      if (!decoder.error_code) {
+         led_update_direction(&decoder);
+         led_update_counter(&decoder);
+         continue; // Schleife fortsetzen, um weitere Eingaben zu ignorieren
+      }
+
+      if (encoder.reset_button_pressed){
+         init_decoder(&decoder);
+      }
+
+      /*
       // Eingänge einlesen
       button_read();
       encoder_read(&encoder);
       
       // Phase auswerten
       // Phasenzähler aktualisieren
-      decoder_decode(&decoder, &encoder);
+      decoder_decode(&encoder, &decoder);
 
       // Winkel berechnen
       calculate_angle(&angle, &decoder);
@@ -51,7 +62,7 @@ int main(void) {
       led_counter_update(&decoder.counter);
       
       // LCD aktualisieren
-      
+      */
    }
 }
 

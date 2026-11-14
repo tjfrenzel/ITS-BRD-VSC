@@ -13,11 +13,14 @@ typedef enum {
 
 typedef struct {
     direction_enum direction;
-    int phase_counter;
+    int32_t phase_counter;
     uint32_t timestamp;
+    int32_t error_code;
 } Decoder_t;
 
 int decoder_decode(Encoder_t *encoder, Decoder_t *decoder);
+void init_decoder(Decoder_t *decoder);
+
 /*
 void decoder_init(Decoder_t *decoder, Encoder_t *encoder);
 
