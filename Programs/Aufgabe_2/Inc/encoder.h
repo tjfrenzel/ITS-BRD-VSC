@@ -19,8 +19,11 @@ typedef struct {
     phase_enum phase_old;
     bool reset_button_pressed;
     uint32_t timestamp;
+    bool initialized;
 } Encoder_t;
 
 void encoder_read(Encoder_t *encoder);
+void init_encoder(Encoder_t *encoder);
+
 
 #endif

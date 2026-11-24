@@ -7,20 +7,28 @@ void led_update_direction(Decoder_t *decoder){
 
     switch (decoder->direction) {
         case DECODED_DIR_FORWARD:
-            GPIOE->BSRR = BSRR_MASK_FORWARD;
+            GPIOE->BSRR = BSRR_MASK_FORWARD | (BSRR_MASK_BACKWARD << 16);
             break;
         case DECODED_DIR_BACKWARD:
-            GPIOE->BSRR = BSRR_MASK_BACKWARD;
+            GPIOE->BSRR = BSRR_MASK_BACKWARD | (BSRR_MASK_FORWARD << 16);
             break;
         default:
             break;
     }
 }
 
+void led_update_error(){
+    GPIOE->BSRR = BSRR_MASK_ERROR;
+}
+
 void led_update_counter(Decoder_t *decoder){
     GPIOD->ODR = (uint8_t)(decoder->phase_counter);
 }
 
+void init_led(){
+    GPIOD->BSRR = 0x00FF << 16;
+    GPIOE->BSRR = 0x00FF << 16;
+}
 /*
 void led_direction_update(const Encoder_Direction_t *direction){
     if(*direction == ENCODER_DIR_FORWARD){

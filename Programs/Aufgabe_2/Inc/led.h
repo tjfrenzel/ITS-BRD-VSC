@@ -9,7 +9,9 @@
 #define BSRR_MASK_FORWARD (0x01u << 7) // Maske Pin 23 für Vorwärts
 
 void led_update_direction(Decoder_t *decoder);
+void led_update_error();
 void led_update_counter(Decoder_t *decoder);
+void init_led();
 
 /*
 #define MASK_LED_FORWARD 0xFFFF0080U

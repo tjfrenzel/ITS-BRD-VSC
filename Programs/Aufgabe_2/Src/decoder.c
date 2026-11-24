@@ -5,9 +5,13 @@
 
 
 int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
-    
     if (decoder->error_code) {
         return decoder->error_code;
+    }
+
+    if(!encoder->initialized){
+        encoder->phase_old = encoder->phase_new;
+        encoder->initialized = true;
     }
 
     int phase_diff = encoder->phase_new - encoder->phase_old;
@@ -30,15 +34,16 @@ int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
             decoder->direction = DECODED_DIR_NONE;
             break;
         default:
-            return decoder->error_code = ERROR;
+            return ERROR;
     };
     return 0;
 }
 
 void init_decoder (Decoder_t *decoder){
-    decoder->direction = DECODED_DIR_NONE;
     decoder->phase_counter = 0;
     decoder->error_code = 0;
+    decoder->timestamp = 0;
+    decoder->initialized = false;
 }
 
 /*

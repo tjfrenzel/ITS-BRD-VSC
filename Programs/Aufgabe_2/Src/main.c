@@ -25,22 +25,29 @@ int main(void) {
    GUI_init(DEFAULT_BRIGHTNESS); // Initialisierung der GUI
 
    Encoder_t encoder;
-   Decoder_t decoder;   
+   encoder.initialized = false;
+   Decoder_t decoder;
+   decoder.initialized = false;   
 
    //Super loop
    while (1) {
-
       encoder_read(&encoder);
-      decoder.error_code = decoder_decode(&encoder, &decoder);
-      if (!decoder.error_code) {
-         led_update_direction(&decoder);
-         led_update_counter(&decoder);
-         continue; // Schleife fortsetzen, um weitere Eingaben zu ignorieren
+      if(encoder.reset_button_pressed){
+         init_encoder(&encoder);
+         init_decoder(&decoder);
+         init_led();
       }
 
-      if (encoder.reset_button_pressed){
-         init_decoder(&decoder);
+      decoder.error_code = decoder_decode(&encoder, &decoder);
+
+      if(decoder.error_code){
+         led_update_error();
+         continue;
       }
+
+      led_update_direction(&decoder);
+      led_update_counter(&decoder);      
+     
 
       /*
       // Eingänge einlesen

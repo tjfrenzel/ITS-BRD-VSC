@@ -16,6 +16,7 @@ typedef struct {
     int32_t phase_counter;
     uint32_t timestamp;
     int32_t error_code;
+    bool initialized;
 } Decoder_t;
 
 int decoder_decode(Encoder_t *encoder, Decoder_t *decoder);
