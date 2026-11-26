@@ -10,6 +10,7 @@
 #include "LCD_GUI.h"
 #include "LCD_Touch.h"
 #include "calculation.h"
+#include "display.h"
 #include "encoder.h"
 #include "decoder.h"
 #include "init.h"
@@ -17,6 +18,7 @@
 #include "led.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx.h"
+#include "time.h"
 
 int main(void) {
    
@@ -28,13 +30,20 @@ int main(void) {
    encoder.initialized = false;
    Decoder_t decoder;
    decoder.initialized = false;   
+   Time time;
+   results result;
+
+   init_display();
+   init_time(&time);
 
    //Super loop
    while (1) {
-      encoder_read(&encoder);
+      encoder_read(&encoder, &time);
       if(encoder.reset_button_pressed){
          init_encoder(&encoder);
          init_decoder(&decoder);
+         init_time(&time);
+
          init_led();
       }
 
@@ -46,7 +55,9 @@ int main(void) {
       }
 
       led_update_direction(&decoder);
-      led_update_counter(&decoder);      
+      led_update_counter(&decoder);
+      calc_angle(&result, &decoder);
+      calc_angle_velocity(&result, &decoder);      
      
 
       /*

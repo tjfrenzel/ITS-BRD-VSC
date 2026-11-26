@@ -19,16 +19,20 @@ int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
 
     switch (phase_diff) {
         case 1:
-        case -3:
+        case -2:
             decoder->direction = DECODED_DIR_FORWARD;
-            decoder->phase_counter++;
-            decoder->timestamp = encoder->timestamp;
+            decoder->phase_counter_old = decoder->phase_counter_new;
+            decoder->phase_counter_new++;
+            decoder->timestamp_old = decoder->timestamp_new;
+            decoder->timestamp_new = encoder->timestamp;
             break;
         case -1:
-        case 3:
+        case 2:
             decoder->direction = DECODED_DIR_BACKWARD;
-            decoder->phase_counter--;
-            decoder->timestamp = encoder->timestamp;
+            decoder->phase_counter_old = decoder->phase_counter_new;
+            decoder->phase_counter_new--;
+            decoder->timestamp_old = decoder->timestamp_new;
+            decoder->timestamp_new = encoder->timestamp;
             break;
         case 0:
             decoder->direction = DECODED_DIR_NONE;
@@ -40,9 +44,11 @@ int decoder_decode(Encoder_t *encoder, Decoder_t *decoder) {
 }
 
 void init_decoder (Decoder_t *decoder){
-    decoder->phase_counter = 0;
+    decoder->phase_counter_old = 0;
+    decoder->phase_counter_new = 0;
     decoder->error_code = 0;
-    decoder->timestamp = 0;
+    decoder->timestamp_old = 0;
+    decoder->timestamp_new = 0;
     decoder->initialized = false;
 }
 

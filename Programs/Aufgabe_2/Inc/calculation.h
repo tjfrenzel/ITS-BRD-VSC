@@ -7,7 +7,17 @@
 #define DEGREE_MAX 360
 #define DEGREE_PHASE_CHANGE 0.3
 #define US_TO_S 1000000.0
+#define ONE_SECOND 90000000
 
+typedef struct{
+    double angle;
+    double angle_velocity;
+}results;
+
+void calc_angle(results *result, Decoder_t *decoder);
+void calc_angle_velocity(results *result, Decoder_t *decoder);
+
+/*
 typedef struct {
     int32_t counter;
     uint32_t timestamp;
@@ -19,5 +29,5 @@ void calculation_init(Calculation_t *calc, Decoder_t *decoder);
 int calculate_angle(double * result, Decoder_t *decoder);
 
 int calculate_speed(double * result, Decoder_t *decoder, Calculation_t *calc);
-
+*/
 #endif

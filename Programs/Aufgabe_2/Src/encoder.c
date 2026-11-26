@@ -1,9 +1,10 @@
 
 #include "encoder.h"
 #include "stm32f429xx.h"
+#include "time.h"
 #include "timer.h"
 
-void encoder_read(Encoder_t *encoder){
+void encoder_read(Encoder_t *encoder, Time *time){
     uint32_t gpio_state;
 
     // GPIO-Eingänge auslesen
@@ -16,7 +17,7 @@ void encoder_read(Encoder_t *encoder){
     encoder->reset_button_pressed = (gpio_state & IDR_MASK_RESET_BUTTON) == 0;
 
     // Zeitstempel erfassen
-    encoder->timestamp = getTimeStamp();
+    encoder->timestamp = get_timestamp64(time);
 }
 
 void init_encoder(Encoder_t *encoder){

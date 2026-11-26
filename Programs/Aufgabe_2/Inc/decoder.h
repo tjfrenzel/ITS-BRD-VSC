@@ -13,8 +13,10 @@ typedef enum {
 
 typedef struct {
     direction_enum direction;
-    int32_t phase_counter;
-    uint32_t timestamp;
+    int32_t phase_counter_old;
+    int32_t phase_counter_new;
+    uint64_t timestamp_old;
+    uint64_t timestamp_new;
     int32_t error_code;
     bool initialized;
 } Decoder_t;
